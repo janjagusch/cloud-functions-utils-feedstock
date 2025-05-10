@@ -3,6 +3,7 @@ schema_version: 1
 context:
   name: cloud-functions-utils
   version: 0.5.0
+  python_min: 3.6
 
 package:
   name: ${{ name|lower }}
