@@ -1,18 +1,21 @@
-{% set name = "cloud-functions-utils" %}
-{% set version = "0.5.0" %}
+schema_version: 1
+
+context:
+  name: cloud-functions-utils
+  version: 0.5.0
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: ${{ name|lower }}
+  version: ${{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cloud-functions-utils-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/${{ name[0] }}/${{ name }}/cloud-functions-utils-${{ version }}.tar.gz
   sha256: e773da8e00c7400a42480e2bc321304aa69730c6e4b22b63ce1d8529722020d1
 
 build:
+  number: 1
   noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  script: ${{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
@@ -26,19 +29,18 @@ requirements:
     - google-cloud-storage >=1.28,<2.0
     - python >=3.6,<4.0
 
-test:
-  imports:
-    - cloud_functions_utils
-  commands:
-    - pip check
-  requires:
-    - pip
+tests:
+  - python:
+      imports:
+        - cloud_functions_utils
+      pip_check: true
 
+      python_version: ${{ python_min }}.*
 about:
-  home: https://pypi.org/project/cloud-functions-utils/
   summary: Utilities for Google Cloud Functions.
   license: MIT
   license_file: LICENSE
+  homepage: https://pypi.org/project/cloud-functions-utils/
 
 extra:
   recipe-maintainers:
